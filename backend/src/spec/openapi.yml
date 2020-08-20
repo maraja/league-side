@@ -1,0 +1,34 @@
+openapi: '3.0.0'
+# modularized based off: https://github.com/OAI/OpenAPI-Specification/issues/1961
+info:
+  version: 1.0.0
+  title: League Sponsorship
+  description: The official v1 LeagueSide API
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: /v1
+paths:
+  /league:
+    $ref: './league/league.yml#/league'
+
+components:
+  schemas:
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

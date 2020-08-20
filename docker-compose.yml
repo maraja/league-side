@@ -1,0 +1,31 @@
+version: "3"
+services:
+    backend:
+        build: "./backend"
+        depends_on:
+            - backend-db
+            - backend-test-db
+        environment:
+            - DB_URI=mysql://root:password@backend-db/db?charset=UTF8
+            - TEST_DB_URI=mysql://root:password@backend-test-db/db?charset=UTF8
+            - MOCK_DATA=no
+        ports:
+            - 7001:7001
+        volumes:
+            - ./backend:/opt/app
+    
+    backend-db:
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=db
+        image: mysql:5.7.20
+        ports:
+            - 0.0.0.0:7201:3306
+
+    backend-test-db:
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=db
+        image: mysql:5.7.20
+        ports:
+            - 0.0.0.0:8201:3306

@@ -1,0 +1,90 @@
+league:
+    post:
+        description: |
+            creates a new league
+        operationId: postLeague
+        # security:
+        #     - ApiKeyAuth: []
+        requestBody:
+            description: details for league
+            required: true
+            content:
+                application/json:
+                    schema: 
+                        $ref: '#/components/schemas/League'
+
+        responses:
+            '200':
+                description: league quote
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/League'
+            default:
+                description: unexpected error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '../openapi.yml#/components/schemas/Error'
+    get:
+        description: |
+            get leagues
+        operationId: getLeagues
+        # security:
+        #     - ApiKeyAuth: []
+        parameters:
+            -   in: query
+                name: lat
+                schema:
+                    type: number
+                required: true
+            -   in: query
+                name: lng
+                schema:
+                    type: number
+                required: true
+            -   in: query
+                name: radius
+                schema:
+                    type: number
+                required: true
+            -   in: query
+                name: budget
+                schema:
+                    type: number
+                required: true
+
+        responses:
+            '200':
+                description: League response
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/League'
+            default:
+                description: unexpected error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '../openapi.yml#/components/schemas/Error'
+
+components:
+    schemas:
+        League:
+            required:
+                - name
+                - lat
+                - lng
+                - price
+            properties:
+                name:
+                    type: string
+                lat:
+                    type: number
+                    minimum: 0
+                lng:
+                    type: number
+                    minimum: 0
+                price:
+                    type: number
+                    minimum: 0
